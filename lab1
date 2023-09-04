@@ -1,0 +1,6 @@
+1.select e.f_name,e.l_name,d.d_name from EMPLOYEE e join DEPARTMENT d on e.d_id=d.d_id where e.e_salary >(select avg(e.e_salary) from EMPLOYEE e join DEPARTMENT d on d.d_id=e.d_id where d.d_name='Finance');
+2.select e.f_name,d.d_name from DEPARTMENT d,PROJECT p,WORKS_ON w,EMPLOYEE e where e.d_id=d.d_id and d.d_id=p.d_id and w.p_id=p.p_id and d.d_name="R&D" and p.e_date>now() group by e.f_name,d.d_name having count(e.ssn)>2;
+3.select p.p_name,d.d_name from PROJECT p,DEPARTMENT d where p.d_id=d.d_id and p.e_date>now();
+6.select d.d_name,e.f_name from EMPLOYEE e,DEPARTMENT d,PROJECT p,PLOC pl where d.d_id=e.d_id and p.d_id=d.d_id and p.p_id=pl.p_id group by d.d_name,e.f_name having count(p_loc)>1;
+4.select distinct e.f_name, d.d_name from EMPLOYEE e, DEPARTMENT d ,PROJECT p where e.d_id=d.d_id and p.e_date<now() and e.ssn in (select s_ssn from EMPLOYEE where s_ssn in (select ssn from WORKS_ON group by ssn having count(ssn) >=1) group by s_ssn having count(s_ssn)>2);
+5.select d.depe_name from EMPLOYEE e,DEPENDANT d, PROJECT p,DEPARTMENT dd where  d.ssn=e.ssn and dd.d_id=p.d_id and dd.d_id=e.d_id and p.e_date<now() group by d.depe_name,e.ssn having sum(p.P_AMOUNT)>=1000000;
